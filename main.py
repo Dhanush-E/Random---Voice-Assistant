@@ -8,6 +8,10 @@ import pyttsx3
 import numpy as np
 import requests
 import json
+from bs4 import BeautifulSoup
+
+#note making modules
+import subprocess
 
 #GUI module 
 from tkinter import *
@@ -69,8 +73,23 @@ def wish():
 
 name_list = np.array(["what is your name","who are you"])
 
+#note
+def note(text):
+	date = datetime.now()
+	file_name = str(date).replace(":","-")+"-note.txt"
+	with open(file_name,"w") as f:
+		f.write(text)
+	subprocess.Popen(["notepad.exe",file_name])
+note_list = np.array(['make a note','write this down','note','remember this'])
 
-
+#weather
+def weather(city):
+	search = f"temperature in {city}"
+	url = f"https://www.google.com/search?q={search}"
+	r = requests.get(url)
+	w_data = BeautifulSoup(r.text,"html.parser")
+	temp = w_data.find("div",class_ = "BNeawe").text
+	speak(f"current {search} is {temp}")
 
 def main():
 	wish()
@@ -81,6 +100,19 @@ def main():
 			if command in name_list:
 				speak("My name is random")
 
+			#notemaking feature	
+			elif command in note_list:
+				speak("what you want me to note down")
+				note_text = get_audio()
+				note(note_text)
+				speak("I Noted that")
+				
+			#weather feature 
+			elif "weather" in command:
+				speak("In which city")
+				i_city = get_audio()
+				weather(i_city)
+				
 			#games feature
 			elif "game" in command:
 				speak(' Opening a random game for you to play')
