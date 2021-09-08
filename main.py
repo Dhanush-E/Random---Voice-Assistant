@@ -95,7 +95,7 @@ def weather(city):
 	speak(f"current {search} is {temp}")
 #news function
 def news():
-	API_KEY = "13e2ce4f1a7249af81efbce1e0c01d6e"
+	API_KEY = "XXXXXXXXXXXXXXXXXXXX"
 	news_url = f"https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey={API_KEY}"
 	news = requests.get(news_url).json()
 	n_article = news["articles"]
