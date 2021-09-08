@@ -13,6 +13,9 @@ from bs4 import BeautifulSoup
 #note making modules
 import subprocess
 
+#internet speed modules
+import speedtest as sp
+
 #GUI module 
 from tkinter import *
 from PIL import ImageTk, Image
@@ -90,6 +93,26 @@ def weather(city):
 	w_data = BeautifulSoup(r.text,"html.parser")
 	temp = w_data.find("div",class_ = "BNeawe").text
 	speak(f"current {search} is {temp}")
+#news function
+def news():
+	API_KEY = "13e2ce4f1a7249af81efbce1e0c01d6e"
+	news_url = f"https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey={API_KEY}"
+	news = requests.get(news_url).json()
+	n_article = news["articles"]
+
+	news_headlines = []
+	for arti in n_article:
+		news_headlines.append(arti['title'])
+
+	for i in range(5):
+		speak(f'headline {i+1} is {news_headlines[i]}')
+		
+#internet speed function
+def internet_speed():
+	st = sp.Speedtest()
+	dl = st.download()
+	up = st.upload()
+	speak(f"the upload speed is {up // 8000000} MB per second and download speed is {dl // 8000000} MB per second")
 
 def main():
 	wish()
@@ -127,7 +150,15 @@ def main():
 					whatthecolor.main()
 				elif ch == 5:
 					Jumbbled.main()
-
+			#news feature
+			elif "news" in command:
+				speak('here are few top-headlines')
+				news()
+				
+			#internet speed feature
+			elif "internet speed" in command:
+				speak("sure just a moment")
+				internet_speed()
 			#music
 			elif "music" in command:
 				speak('ok sure')
