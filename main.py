@@ -10,6 +10,12 @@ import requests
 import json
 from bs4 import BeautifulSoup
 
+#importing modules for web search
+from googlesearch import search
+
+#importing wikipedia module
+import wikipedia
+
 #note making modules
 import subprocess
 
@@ -122,6 +128,23 @@ def main():
 
 			if command in name_list:
 				speak("My name is random")
+			#wikipedia
+			elif "wikipedia" in command:
+				speak('Searching Wikipedia...')
+				command = command.replace("wikipedia", "")
+				results = wikipedia.summary(command, sentences=2)
+				speak("According to Wikipedia")
+				speak(results)
+
+
+			#google search
+			elif "search" in command:
+				speak("What you want me to search")
+				s_word = get_audio().lower()
+				for i in search(s_word,tld = "co.in",num = 1,start = 1 ,stop = 1):
+					speak("Here, this is what i found on web")
+					wb.open(f"{i}")
+
 
 			#notemaking feature	
 			elif command in note_list:
