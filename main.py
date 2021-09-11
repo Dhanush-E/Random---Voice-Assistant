@@ -9,6 +9,8 @@ import numpy as np
 import requests
 import json
 from bs4 import BeautifulSoup
+import pyperclip
+import string
 
 #importing modules for web search
 from googlesearch import search
@@ -120,6 +122,18 @@ def internet_speed():
 	up = st.upload()
 	speak(f"the upload speed is {up // 8000000} MB per second and download speed is {dl // 8000000} MB per second")
 
+#password genration
+def passgen():
+	letters = string.ascii_letters
+	num = string.digits
+	spchar = string.punctuation
+	plist = []
+	plist.extend(list(letters)+list(num)+list(spchar))
+	random.shuffle(plist)
+	Password = "".join(plist[0:8])
+	pyperclip.copy(Password)
+password_list = np.array(["generate a password","can you generate a Password for me","password"])
+
 def main():
 	wish()
 	while True:
@@ -177,7 +191,13 @@ def main():
 			elif "news" in command:
 				speak('here are few top-headlines')
 				news()
-				
+
+			#password genration
+			elif command in password_list:
+				speak("ok sure, just a moment")
+				passgen()
+				speak("your password is copied to clipboard")
+
 			#internet speed feature
 			elif "internet speed" in command:
 				speak("sure just a moment")
