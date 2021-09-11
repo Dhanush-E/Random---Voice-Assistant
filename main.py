@@ -211,11 +211,11 @@ def main():
 				speak(f'sure {fact}')
 
 			#app open
-			elif "vs code" in command:
+			elif "open vs code" in command:
 				os.startfile("C:\\Users\\dhanu\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe")
 				speak("Opening Visual Studio code")
 
-			elif "notepad" in command:
+			elif "open notepad" in command:
 				os.startfile("%windir%\\system32\\notepad.exe")
 				speak("Opening notepad")
 
