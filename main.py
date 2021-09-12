@@ -12,6 +12,9 @@ from bs4 import BeautifulSoup
 import pyperclip
 import string
 
+#importing mail module
+import yagmail
+
 #importing modules for web search
 from googlesearch import search
 
@@ -187,6 +190,18 @@ def main():
 					whatthecolor.main()
 				elif ch == 5:
 					Jumbbled.main()
+
+			#sending an email
+			elif "mail" in command:
+				speak("Ya sure, what is your message")
+				message = get_audio().lower()
+				speak("what is your subject")
+				sub = get_audio().lower()
+				speak("enter the receiver mail id")
+				rec_m = input('mail: ')
+				sender = yagmail.SMTP('XXXXXXXXXX@gmail.com')
+				sender.send(to = rec_m,subject = sub,contents = message)
+
 			#news feature
 			elif "news" in command:
 				speak('here are few top-headlines')
